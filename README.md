@@ -1,2 +1,2 @@
 # sirius
-Implementations of ANN
+Implementation of ANN
