@@ -1,2 +1,2 @@
 # sirius
-Implementations of ML algorithms
+Implementations of ANN
