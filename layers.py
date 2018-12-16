@@ -8,17 +8,20 @@ class Layer(object):
 
 class HiddenLayer(Layer):
     # NN hidden layer
-    def __init__(self, activation, weight_initialisation='uniform'):
+    def __init__(self, activation, n_neurons, weight_initialisation='uniform'):
         self._weight_inilization = weight_initialisation
         self._activation = activation
 
-    def initialise_weights(dim, weight_initialisation):
+    def _initialise_weights(self, dim, weight_initialisation, n_neurons):
         if weight_initialisation == 'uniform':
-            weights = np.random.uniform(0, 0.05, dim)
-
+            weights = np.random.uniform(0, 0.05, (dim, n_neurons))
         return weights
 
-    def activation_function(activation):
+    def _inilitalise_bias(self, n_neurons):
+        bias = np.zeros(n_neurons)
+        return bias
+
+    def _activation_function(self, activation):
         if activation == "sigmoid":
             # activated = 1 / (1 + np.exp(-product)
 
