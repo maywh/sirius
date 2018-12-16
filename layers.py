@@ -1,21 +1,22 @@
 import numpy as np
 
+
 class Layer(object):
     # Parent layer
-    def __init__(self):
-        pass
+    def __init__(self, n_target, n_neurons, weight_initialisation):
+        self.weights = self.initialise_weights(n_target, n_neurons, weight_initialisation)
+
+    def _initialise_weights(self, n_target, n_neurons, weight_initialisation):
+        if weight_initialisation == 'uniform':
+            weights = np.random.uniform(0, 0.05, (n_target, n_neurons))
+        return weights
 
 
 class HiddenLayer(Layer):
     # NN hidden layer
-    def __init__(self, activation, n_neurons, weight_initialisation='uniform'):
-        self._weight_inilization = weight_initialisation
+    def __init__(self, activation, n_input, n_neurons, weight_initialisation='uniform'):
+        self._weights = super().__init__(n_input, n_neurons, weight_initialisation)
         self._activation = activation
-
-    def _initialise_weights(self, dim, weight_initialisation, n_neurons):
-        if weight_initialisation == 'uniform':
-            weights = np.random.uniform(0, 0.05, (dim, n_neurons))
-        return weights
 
     def _inilitalise_bias(self, n_neurons):
         bias = np.zeros(n_neurons)
@@ -30,7 +31,9 @@ class HiddenLayer(Layer):
 
 class OutputLayer(Layer):
     # NN output layer
-    pass
+    def __init__(self, n_output, n_neurons, weight_initialisation='uniform'):
+        self._weights = super().__init__(n_output, n_neurons, weight_initialisation)
+        self.n_output = n_output
 
 
 class Dropout(Layer):
