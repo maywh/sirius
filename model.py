@@ -1,5 +1,13 @@
 
 class Model(object):
-    pass
+    def __init__(self):
+        self._network = []
 
-    #maybe make it a collection?
+    def add(self, layer):
+        self.network.append(layer)
+
+    def forward_propagation(self):
+        pass
+
+    def back_propagation(self):
+        pass
