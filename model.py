@@ -1,13 +1,24 @@
+import numpy as np
 
-class Model(object):
-    def __init__(self):
+class Model:
+    
+    def __init__(self, input_data):
+        self._input_data = input_data
         self._network = []
+        self.depth = 0
 
     def add(self, layer):
-        self.network.append(layer)
+        self._network.append(layer)
+        self.depth += 1
 
     def forward_propagation(self):
-        pass
+        z = self._propagate(self._input_data, self._network[0])
+        for i in range(1, self.depth):
+            z = self._propagate(z, self._network[i])
 
     def back_propagation(self):
         pass
+
+    def _propagate(self, input_layer, layer):
+        z = np.dot(input_layer, layer.weights) + layer.bias
+        return z
