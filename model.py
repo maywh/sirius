@@ -21,4 +21,9 @@ class Model:
 
     def _propagate(self, input_layer, layer):
         z = np.dot(input_layer, layer.weights) + layer.bias
+        z = self._activate(layer, z)
         return z
+
+    def _activate(self, layer, product):
+        return layer.activate(product)
+        
