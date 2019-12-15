@@ -1,9 +1,11 @@
 from numpy import genfromtxt
 
-from sirius import model
+from sirius.model import Model
+from sirius.layers import HiddenLayer
 
 data = genfromtxt('tests/data/iris.csv', delimiter=',', skip_header=1)
-model = model.Model(input_data = data)
+model = Model(input_data = data)
+layer1 = HiddenLayer(dimensions=len(data), units=2, activation='sigmoid')
 
 def test_model_init():
     assert model._depth == 0
@@ -11,7 +13,7 @@ def test_model_init():
 
 
 def test_model_add():
-    model.add(activation="sigmoid", n_neurons=2)
+    model.add(layer1)
     assert model._depth == 1
     assert len(model._network) == 1
     

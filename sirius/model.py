@@ -13,14 +13,13 @@ class Model:
         self._input_data = input_data
       
 
-    def add(self, activation, n_neurons, **kwargs):
+    def add(self, layer, **kwargs):
 
         if self._depth == 0:
             n_input = self._input_data.shape[0]
         # else:
         #     n_input = _network[_depth-1].
 
-        layer = HiddenLayer(activation = activation, n_input = n_input, n_neurons=n_neurons)
         self._network.append(layer)
         self._depth += 1
 
