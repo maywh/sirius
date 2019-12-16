@@ -5,40 +5,46 @@ from sirius.layers import HiddenLayer
 
 class Model:
 
-    _depth = 0
-    _network = []
-    _input_data = []
     
     def __init__(self, input_data):
         self._input_data = input_data
-      
+        self._m = input_data.shape[0]
+        self.depth = 0
+        self._network = []
 
+      
     def add(self, layer, **kwargs):
 
-        if self._depth == 0:
-            n_input = self._input_data.shape[0]
-        # else:
-        #     n_input = _network[_depth-1].
+        if self.depth == 0:
+            assert layer.shape == self._m
+        else:
+            layer.shape = _network[depth-1].shape
 
         self._network.append(layer)
-        self._depth += 1
+        self.depth += 1
+
 
     def forward_propagation(self):
-        z = self._propagate(self._input_data, self._network[0])
-        for i in range(1, self.depth):
-            z = self._propagate(z, self._network[i])
+        A = self._forward_propagate(self._input_data, self._network[0])
+        for i in range(1, -self.depth):
+            A = self._forward_propagate(A, self._network[i])
+        return A
+
 
     def back_propagation(self):
         pass
 
-    def _propagate(self, input_layer, layer):
-        z = np.dot(input_layer, layer.weights) + layer.bias
-        z = self._activate(layer, z)
-        return z
 
-    def _activate(self, layer, z):
-        return layer.activate(z)
+    def _forward_propagate(self, Z, layer):
+        Z = np.dot(Z, layer.weights) + layer.bias
+        A = layer.activate_and_update_attributes(layer, Z)
+        return A
 
-    def cost(self):
+    
+    def _backward_propagate(self, layer):
         pass
+
+
+    def cost(self, Y, Y_hat):
+        return -1/self._m * (np.dot(Y, np.log(Y_hat).T) + np.dot(1-Y, np.log(Y_hat).T))
         
